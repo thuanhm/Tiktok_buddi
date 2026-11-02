@@ -12,6 +12,7 @@
 <style>html,body{margin:0;height:100%;background:transparent;overflow:hidden}</style>
 </helmet>
 <div style="position:fixed;inset:0;overflow:hidden;font-family:'Be Vietnam Pro',sans-serif;background:transparent;">
+<div style="position:absolute;left:50%;top:50%;width:390px;height:844px;transform:translate(-50%,-50%) scale({{ scale }});transform-origin:50% 50%;overflow:hidden;">
 
 <img src="assets/temple.png" alt="" style="position:absolute;top:0;left:-104px;width:598px;height:844px;">
 <div style="position:absolute;right:-90px;top:60px;width:150px;height:520px;transform:rotate(38deg);background:linear-gradient(180deg,rgba(255,244,214,.38),rgba(255,236,190,0) 85%);filter:blur(10px);mix-blend-mode:screen;pointer-events:none;"></div>
@@ -104,6 +105,7 @@
 </div>
 
 </div>
+</div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;autoSim&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mô phỏng&quot;},&quot;simSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.5,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Mô phỏng&quot;},&quot;coloredRobes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hiển thị&quot;},&quot;showBoard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hiển thị&quot;},&quot;liveWsUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ws://localhost:8787&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;TikTok LIVE&quot;}}">
 const NAMES=['Hà Hằng','Bờm 62','Minh Nguyễn','thanhchuc140101','nuicao91','Diệu Hạnh','Tâm An','Chàng Gió','Dior','Thảo Ly','Quang Huy','Bích Ngọc','Olaha','LTBV','Trần Hùng','Phúc Lâm','Mai Anh','Tuệ Minh','Hoa Sen Trắng','An Nhiên'];
@@ -118,9 +120,17 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 let UID=1;
 
 class Component extends DCLogic {
-  state={now:Date.now(),devotees:[],kneelers:[],chat:[],joins:[],banners:[],hearts:[],
+  state={now:Date.now(),scale:1,devotees:[],kneelers:[],chat:[],joins:[],banners:[],hearts:[],
     board:{},pray:0,liveConnected:false};
   componentDidMount(){
+    // Khung thiết kế gốc là 390x844 (dọc); viewport thật của nguồn Link có thể
+    // là bất kỳ tỉ lệ nào (dọc, ngang, vuông...) tùy layout TikTok LIVE Studio.
+    // "cover" = phóng to vừa đủ để phủ kín khung, có thể crop bớt rìa trên/dưới
+    // hoặc trái/phải — ưu tiên không chừa viền trống hơn là nhìn thấy trọn cảnh.
+    this.fit=()=>this.setState({scale:Math.max(window.innerWidth/390,window.innerHeight/844)||1});
+    this.fit();window.addEventListener('resize',this.fit);
+    this.ro=new ResizeObserver(this.fit);this.ro.observe(document.documentElement);
+    setTimeout(this.fit,300);
     this.tick=setInterval(()=>this.onTick(),200);
     this.connectLive();
     if(this.props.autoSim??false){
@@ -131,7 +141,7 @@ class Component extends DCLogic {
     }
     this.loop();
   }
-  componentWillUnmount(){clearInterval(this.tick);clearTimeout(this.simT);clearTimeout(this.liveReconnectT);this.liveSocket&&this.liveSocket.close();}
+  componentWillUnmount(){clearInterval(this.tick);clearTimeout(this.simT);clearTimeout(this.liveReconnectT);window.removeEventListener('resize',this.fit);this.ro&&this.ro.disconnect();this.liveSocket&&this.liveSocket.close();}
   // Kết nối tới server cục bộ (server.js) nhận gift/chat THẬT từ TikTok LIVE
   // và chuyển thành hành động trên overlay. Tự thử kết nối lại nếu server
   // chưa chạy hoặc bị rớt mạng — không chặn phần mô phỏng demo.
@@ -248,7 +258,7 @@ class Component extends DCLogic {
       initial:(b.name.trim()[0]||'?').toUpperCase()};});
     const hearts=s.hearts.map(h=>{const age=now-h.born;const go=age>60;return {id:h.id,color:h.color,tf:go?`translate(${h.dx}px,-240px) scale(1.3)`:'translate(0,0) scale(.6)',op:age<0?0:go?0:1};});
     const joins=s.joins.map(j=>({...j,op:now-j.born>6000?0:1}));
-    return {devotees,kneelers,bubbles,board,banners,hearts,joins,
+    return {scale:s.scale,devotees,kneelers,bubbles,board,banners,hearts,joins,
       showBoard:this.props.showBoard??true,pray:s.pray,
       liveConnected:s.liveConnected,liveDot:s.liveConnected?'#3ad17a':'#d64545',liveLabel:s.liveConnected?'Đã kết nối TikTok LIVE':'Chưa kết nối (đang mô phỏng)'};
   }
