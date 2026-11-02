@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet">
+<style>html,body{margin:0;height:100%;background:#0d0a08;overflow:hidden}a{color:#f3d27a}a:hover{color:#fff}input::placeholder{color:rgba(255,255,255,.62)}</style>
+</helmet>
+<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Be Vietnam Pro',sans-serif;">
+<div style="position:relative;width:{{ frameW }}px;height:{{ frameH }}px;overflow:hidden;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6);">
+<div data-screen-label="Live" style="position:absolute;left:0;top:0;width:390px;height:844px;transform:scale({{ scale }});transform-origin:0 0;overflow:hidden;background:#1a0d06;">
+
+<img src="assets/temple.png" alt="" style="position:absolute;top:0;left:-104px;width:598px;height:844px;">
+<div style="position:absolute;right:-90px;top:60px;width:150px;height:520px;transform:rotate(38deg);background:linear-gradient(180deg,rgba(255,244,214,.38),rgba(255,236,190,0) 85%);filter:blur(10px);mix-blend-mode:screen;pointer-events:none;"></div>
+<div style="position:absolute;right:-20px;top:120px;width:60px;height:440px;transform:rotate(38deg);background:linear-gradient(180deg,rgba(255,244,214,.3),rgba(255,236,190,0) 80%);filter:blur(6px);mix-blend-mode:screen;pointer-events:none;"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:260px;background:linear-gradient(180deg,rgba(20,6,2,0),rgba(20,6,2,.55));pointer-events:none;z-index:900;"></div>
+
+<div style="position:absolute;left:50%;top:502px;transform:translateX(-50%);width:150px;box-sizing:border-box;white-space:nowrap;padding:5px 0 4px;background:linear-gradient(180deg,#3b1a0c,#1f0c05);border:1.5px solid #d6ad57;box-shadow:0 0 0 2px #2a1006,0 0 0 3px #a17c33,0 4px 10px rgba(0,0,0,.5);border-radius:5px;text-align:center;z-index:500;">
+<div style="font-family:'Noto Serif',serif;font-weight:700;font-size:14px;letter-spacing:1px;color:#f3d27a;line-height:1.1;">CHÙA ONLINE</div>
+<div style="font-size:7.5px;color:#f5e4bd;font-weight:600;letter-spacing:.3px;">Nam Mô A Di Đà Phật</div>
+</div>
+
+<sc-for list="{{ kneelers }}" as="k" hint-placeholder-count="0">
+<div style="position:absolute;left:{{ k.left }}px;top:{{ k.top }}px;width:{{ k.w }}px;height:{{ k.h }}px;z-index:{{ k.z }};transition:{{ k.trans }};opacity:{{ k.op }};">
+<div style="position:absolute;left:50%;bottom:-7px;width:170%;height:18px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,214,120,.95),rgba(255,190,80,0));opacity:{{ k.glow }};transition:opacity .8s;"></div>
+<div style="position:absolute;left:0;bottom:0;width:100%;height:100%;background-image:{{ k.bg }};background-size:contain;background-position:50% 100%;background-repeat:no-repeat;transform-origin:50% 100%;transform:{{ k.tf }};transition:transform .8s ease-in-out;filter:{{ k.filter }};"></div>
+<div style="position:absolute;left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:1px 5px;border-radius:7px;background:{{ k.tagBg }};color:{{ k.tagColor }};font-size:8px;font-weight:700;white-space:nowrap;max-width:64px;overflow:hidden;opacity:{{ k.tagOp }};transition:opacity .6s;">
+<span style="overflow:hidden;text-overflow:ellipsis;">{{ k.name }}</span>
+</div>
+</div>
+</sc-for>
+
+<sc-for list="{{ devotees }}" as="d" hint-placeholder-count="0">
+<div style="position:absolute;left:{{ d.left }}px;top:{{ d.top }}px;width:{{ d.w }}px;height:{{ d.h }}px;z-index:{{ d.z }};transition:left 2.2s cubic-bezier(.3,.2,.4,1),top 2.2s cubic-bezier(.3,.2,.4,1),width 2.2s cubic-bezier(.3,.2,.4,1),height 2.2s cubic-bezier(.3,.2,.4,1);">
+<div style="position:absolute;left:0;bottom:0;width:100%;height:100%;background-image:{{ d.bg }};background-size:contain;background-position:50% 100%;background-repeat:no-repeat;filter:{{ d.filter }};"></div>
+<div style="position:absolute;left:50%;bottom:calc(100% + 1px);transform:translateX(-50%);padding:1px 5px;border-radius:7px;background:{{ d.tagBg }};color:{{ d.tagColor }};font-size:8px;font-weight:700;white-space:nowrap;max-width:62px;overflow:hidden;text-overflow:ellipsis;">{{ d.name }}</div>
+</div>
+</sc-for>
+
+<img src="assets/crowd.png" alt="" style="position:absolute;left:-15px;top:669px;width:420px;z-index:700;pointer-events:none;">
+
+<sc-for list="{{ bubbles }}" as="b" hint-placeholder-count="0">
+<div style="position:absolute;left:{{ b.left }}px;top:{{ b.top }}px;transform:translate(-50%,-100%);z-index:1500;opacity:{{ b.op }};transition:opacity .4s;pointer-events:none;">
+<div style="display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:11px;background:#fffaf0;border:1px solid {{ b.border }};box-shadow:0 2px 6px rgba(0,0,0,.3);max-width:160px;">
+<div style="width:7px;height:7px;flex:none;border-radius:50%;background:linear-gradient(135deg,#f6c453,#e8892f);"></div>
+<div style="font-size:10px;font-weight:700;color:#3a2410;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ b.text }}</div>
+</div>
+<div style="width:7px;height:7px;background:#fffaf0;transform:rotate(45deg);margin:-4px auto 0;border-right:1px solid {{ b.border }};border-bottom:1px solid {{ b.border }};"></div>
+</div>
+</sc-for>
+
+<div title="{{ liveLabel }}" style="position:absolute;left:10px;top:4px;display:flex;align-items:center;gap:4px;z-index:3100;">
+<div style="width:6px;height:6px;border-radius:50%;background:{{ liveDot }};"></div>
+</div>
+
+<div style="display:{{ uiDisplay }};"><div style="position:absolute;left:0;right:0;top:0;height:40px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;color:#fff;z-index:3000;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,0));">
+<span style="font-size:15px;font-weight:700;">{{ clock }}</span>
+<div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;">
+<span>5G</span>
+<div style="width:22px;height:11px;border-radius:3px;border:1.5px solid rgba(255,255,255,.8);padding:1px;box-sizing:border-box;"><div style="width:60%;height:100%;background:#fff;border-radius:1px;"></div></div>
+</div>
+</div>
+
+<div style="position:absolute;left:10px;right:10px;top:46px;display:flex;align-items:center;justify-content:space-between;z-index:3000;">
+<div style="display:flex;align-items:center;gap:8px;padding:3px 4px 3px 3px;border-radius:22px;background:rgba(0,0,0,.38);">
+<div style="width:34px;height:34px;border-radius:50%;overflow:hidden;border:1.5px solid #f3d27a;flex:none;">
+<img src="assets/temple.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 18%;">
+</div>
+<div style="display:flex;flex-direction:column;color:#fff;line-height:1.2;">
+<span style="font-size:13px;font-weight:700;">Chùa Online</span>
+<span style="font-size:10px;opacity:.85;">♥ {{ likesFmt }}</span>
+</div>
+<div onClick="{{ toggleFollow }}" style="padding:6px 12px;border-radius:16px;background:{{ followBg }};color:#fff;font-size:12px;font-weight:700;cursor:pointer;">{{ followLabel }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:6px;">
+<div style="display:flex;">
+<sc-for list="{{ topViewers }}" as="v" hint-placeholder-count="2">
+<div style="width:28px;height:28px;margin-left:-6px;border-radius:50%;border:1.5px solid #f3d27a;background:{{ v.bg }};color:#2a1206;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ v.initial }}</div>
+</sc-for>
+</div>
+<div style="padding:5px 10px;border-radius:14px;background:rgba(0,0,0,.38);color:#fff;font-size:12px;font-weight:700;">{{ viewers }}</div>
+<div style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;">✕</div>
+</div>
+</div>
+
+<div style="position:absolute;left:10px;right:10px;top:92px;display:flex;justify-content:space-between;gap:8px;z-index:3000;">
+<div style="white-space:nowrap;padding:4px 10px;border-radius:12px;background:rgba(0,0,0,.32);color:#fff;font-size:11px;font-weight:600;">Phòng tu tập · {{ viewers }}</div>
+<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;padding:4px 10px;border-radius:12px;background:rgba(0,0,0,.32);color:#ffe9b5;font-size:11px;font-weight:600;">Im lặng nào, niệm Phật</div>
+</div>
+
+</div>
+<sc-if value="{{ showBoard }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:10px;top:146px;width:148px;padding:16px 8px 8px;box-sizing:border-box;border-radius:10px;background:linear-gradient(180deg,rgba(92,24,12,.93),rgba(52,14,6,.93));border:2px solid #d9b05a;box-shadow:0 0 0 3px rgba(50,16,4,.75),0 0 0 4px #a8822f,0 6px 18px rgba(0,0,0,.45);z-index:2100;">
+<div style="position:absolute;left:10px;right:10px;top:-11px;padding:3px 0;border-radius:4px;background:linear-gradient(180deg,#c0321f,#7d1410);border:1px solid #e8c36a;text-align:center;font-family:'Noto Serif',serif;font-weight:700;font-size:11.5px;letter-spacing:1px;color:#f8dc8c;">BẢNG CÔNG ĐỨC</div>
+<sc-for list="{{ board }}" as="r" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:6px;height:24px;">
+<div style="width:16px;height:16px;flex:none;border-radius:50%;background:{{ r.rankBg }};color:#3a1a05;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ r.rank }}</div>
+<div style="flex:1;min-width:0;color:{{ r.color }};font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.name }}</div>
+<div style="width:6px;height:6px;flex:none;background:#8fd8ff;transform:rotate(45deg);"></div>
+<div style="min-width:22px;text-align:right;color:#a9e2ff;font-size:10.5px;font-weight:700;">{{ r.total }}</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<div style="position:absolute;right:10px;top:396px;display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:16px;background:rgba(40,12,4,.72);border:1.5px solid #c9a04a;z-index:2100;">
+<div style="width:8px;height:8px;border-radius:50%;background:#3ad17a;"></div>
+<span style="color:#f5dfb0;font-size:10.5px;font-weight:600;">Lượt lễ</span>
+<span style="color:#fff;font-size:14px;font-weight:800;">{{ pray }}</span>
+</div>
+
+<div style="position:absolute;left:10px;top:318px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;z-index:2100;">
+<sc-for list="{{ joins }}" as="j" hint-placeholder-count="0">
+<div style="display:flex;align-items:center;gap:5px;padding:3px 10px 3px 6px;border-radius:12px;background:rgba(40,12,4,.6);color:#ffe9b5;font-size:10.5px;opacity:{{ j.op }};transition:opacity .5s;">
+<div style="width:8px;height:8px;border-radius:50%;background:#f28ab2;"></div>
+<span style="font-weight:700;white-space:nowrap;">{{ j.name }}</span><span style="white-space:nowrap;">{{ j.text }}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="position:absolute;left:0;top:404px;width:260px;height:100px;z-index:2200;pointer-events:none;">
+<sc-for list="{{ banners }}" as="g" hint-placeholder-count="0">
+<div style="position:absolute;left:10px;top:{{ g.top }}px;display:flex;align-items:center;gap:8px;padding:3px 14px 3px 3px;border-radius:21px;background:{{ g.bg }};transform:{{ g.tf }};opacity:{{ g.op }};transition:transform .35s cubic-bezier(.2,.9,.3,1.2),opacity .4s,top .3s;">
+<div style="width:32px;height:32px;flex:none;border-radius:50%;background:{{ g.avBg }};border:1.5px solid #f3d27a;color:#2a1206;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ g.initial }}</div>
+<div style="display:flex;flex-direction:column;line-height:1.2;min-width:0;">
+<span style="color:#fff;font-size:12px;font-weight:700;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis;">{{ g.name }}</span>
+<span style="color:#ffe9b5;font-size:10px;white-space:nowrap;">{{ g.label }}</span>
+</div>
+<span style="color:#ffd76a;font-size:22px;font-weight:800;font-style:italic;text-shadow:0 2px 0 #7a3a08;">x{{ g.amount }}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="display:{{ uiDisplay }};"><div style="position:absolute;left:10px;bottom:62px;width:206px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;z-index:2300;">
+<sc-for list="{{ chat }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;align-items:flex-start;gap:6px;opacity:{{ c.op }};transition:opacity .4s;">
+<div style="width:24px;height:24px;flex:none;border-radius:50%;background:{{ c.bg }};color:#2a1206;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ c.initial }}</div>
+<div style="display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.8);">
+<span style="color:{{ c.nameColor }};font-size:11px;font-weight:600;white-space:nowrap;">{{ c.name }}</span>
+<span style="color:{{ c.textColor }};font-size:12.5px;font-weight:700;text-wrap:pretty;background:rgba(20,6,2,.45);padding:1px 6px;border-radius:8px;align-self:flex-start;">{{ c.text }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="position:absolute;right:10px;bottom:62px;display:flex;gap:6px;z-index:2300;">
+<div onClick="{{ gift5 }}" style="width:70px;height:42px;border-radius:8px;background:rgba(70,15,8,.8);border:1.5px solid #c9a04a;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;line-height:1.15;" style-active="transform:scale(.95)">
+<span style="color:#ffd76a;font-size:13px;font-weight:800;">5 xu</span>
+<span style="color:#f5dfb0;font-size:10.5px;">dâng lễ</span>
+</div>
+<div onClick="{{ gift10 }}" style="width:86px;height:42px;border-radius:8px;background:rgba(70,15,8,.8);border:1.5px solid #c9a04a;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;line-height:1.15;" style-active="transform:scale(.95)">
+<span style="color:#ffd76a;font-size:13px;font-weight:800;">10+ xu</span>
+<span style="color:#f5dfb0;font-size:10.5px;">tăng công đức</span>
+</div>
+</div>
+
+<div style="position:absolute;right:22px;bottom:110px;width:60px;height:300px;z-index:2400;pointer-events:none;">
+<sc-for list="{{ hearts }}" as="h" hint-placeholder-count="0">
+<div style="position:absolute;left:20px;bottom:0;font-size:24px;color:{{ h.color }};transform:{{ h.tf }};opacity:{{ h.op }};transition:transform 2.2s ease-out,opacity 2.2s ease-in;">♥</div>
+</sc-for>
+</div>
+
+<div style="position:absolute;left:10px;right:10px;bottom:12px;display:flex;align-items:center;gap:8px;z-index:2500;">
+<div style="flex:1;min-width:0;height:40px;border-radius:20px;background:rgba(255,255,255,.16);display:flex;align-items:center;padding:0 6px 0 14px;gap:6px;">
+<input value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onKey }}" placeholder="Gửi lời nguyện…" style="flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:inherit;font-size:13px;">
+<div onClick="{{ send }}" style="padding:5px 10px;border-radius:14px;background:#d9a441;color:#2a1206;font-size:11px;font-weight:800;cursor:pointer;">Gửi</div>
+</div>
+<div onClick="{{ giftRose }}" title="Dâng hoa sen" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;color:#ff8fb8;font-size:22px;cursor:pointer;">❀</div>
+<div onClick="{{ openGifts }}" title="Quà" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+<div style="position:relative;width:18px;height:15px;border-radius:2px;background:#ff5d8a;">
+<div style="position:absolute;left:7px;top:0;width:4px;height:15px;background:#ffd76a;"></div>
+<div style="position:absolute;left:-2px;top:-2px;width:22px;height:5px;border-radius:1px;background:#ff7aa0;"></div>
+</div>
+</div>
+<div onClick="{{ like }}" title="Thả tim" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;color:#ff4d6d;font-size:22px;cursor:pointer;">♥</div>
+</div>
+
+<sc-if value="{{ giftOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeGifts }}" style="position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:4000;"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:16px 14px 22px;border-radius:16px 16px 0 0;background:#1d120d;border-top:1.5px solid #8a6a2c;z-index:4001;">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;">
+<span style="font-family:'Noto Serif',serif;font-weight:700;font-size:16px;color:#f3d27a;">Dâng lễ Tam Bảo</span>
+<span style="color:#bfa98a;font-size:11px;">Lễ từ 5 xu sẽ lên quỳ trên chánh điện</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+<sc-for list="{{ giftOptions }}" as="o" hint-placeholder-count="4">
+<div onClick="{{ o.onClick }}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(217,176,90,.35);cursor:pointer;" style-hover="background:rgba(217,176,90,.14)">
+<div style="width:38px;height:38px;flex:none;border-radius:50%;background:{{ o.bg }};color:#2a1206;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;">{{ o.price }}</div>
+<div style="display:flex;flex-direction:column;line-height:1.25;min-width:0;">
+<span style="color:#fff;font-size:13px;font-weight:700;">{{ o.name }}</span>
+<span style="color:#d8c3a0;font-size:10.5px;">{{ o.price }} xu · {{ o.desc }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;autoSim&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mô phỏng&quot;},&quot;simSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.5,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Mô phỏng&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Thiện Tâm&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Người xem&quot;},&quot;coloredRobes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hiển thị&quot;},&quot;showBoard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hiển thị&quot;},&quot;showTikTokUI&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hiển thị&quot;},&quot;liveWsUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ws://localhost:8787&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;TikTok LIVE&quot;}}">
+const NAMES=['Hà Hằng','Bờm 62','Minh Nguyễn','thanhchuc140101','nuicao91','Diệu Hạnh','Tâm An','Chàng Gió','Dior','Thảo Ly','Quang Huy','Bích Ngọc','Olaha','LTBV','Trần Hùng','Phúc Lâm','Mai Anh','Tuệ Minh','Hoa Sen Trắng','An Nhiên'];
+const CMTS=['Nam mô A Di Đà Phật','Nam mô Bổn Sư Thích Ca Mâu Ni Phật','Con xin sám hối','Cầu cho gia đình bình an','Tùy hỷ công đức','Cầu quốc thái dân an','Con xin dâng hương','A Di Đà Phật','Nam mô Quán Thế Âm Bồ Tát','Mong mọi người an lạc'];
+const STAND=[[42,645],[118,645],[272,645],[350,645],[80,668],[156,668],[236,668],[312,668]];
+const KNEEL=[[195,590],[150,590],[240,590],[105,590],[285,590],[172,618],[218,618],[127,618],[263,618],[82,618]];
+const GIFT={1:'dâng hoa sen',5:'dâng lễ',10:'tăng công đức',50:'dâng mâm lễ'};
+const hash=s=>{let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h);};
+const av=n=>`oklch(0.82 0.1 ${hash(n)%360})`;
+const ini=n=>(n.trim()[0]||'?').toUpperCase();
+const fy=y=>0.85+(y-590)/300;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let UID=1;
+
+class Component extends DCLogic {
+  state={now:Date.now(),scale:1,devotees:[],kneelers:[],chat:[],joins:[],banners:[],hearts:[],
+    board:{'Diệu Hạnh':133,'Hà Hằng':120,'Bờm 62':70,'Chàng Gió':46,'Dior':32},pray:77,viewers:44,likes:6300,giftOpen:false,draft:'',follow:false,liveConnected:false};
+  componentDidMount(){
+    this.fit=()=>this.setState({scale:Math.min(window.innerWidth/390,window.innerHeight/844)||1});
+    this.fit();window.addEventListener('resize',this.fit);
+    this.ro=new ResizeObserver(this.fit);this.ro.observe(document.documentElement);
+    setTimeout(this.fit,300);
+    this.tick=setInterval(()=>this.onTick(),200);
+    this.connectLive();
+    if(this.props.autoSim??false){
+      ['Hà Hằng','Minh Nguyễn','LTBV','Tâm An','nuicao91','Thảo Ly'].forEach((n,i)=>setTimeout(()=>this.join(n),i*250));
+      setTimeout(()=>this.comment('Minh Nguyễn','Nam mô A Di Đà Phật'),1800);
+      setTimeout(()=>this.gift('Hà Hằng',5),2400);
+      setTimeout(()=>this.gift('Bờm 62',10),4200);
+    }
+    this.loop();
+  }
+  componentWillUnmount(){clearInterval(this.tick);clearTimeout(this.simT);clearTimeout(this.liveReconnectT);window.removeEventListener('resize',this.fit);this.liveSocket&&this.liveSocket.close();}
+  // Kết nối tới server cục bộ (server.js) nhận gift/chat THẬT từ TikTok LIVE
+  // và chuyển thành hành động trên overlay. Tự thử kết nối lại nếu server
+  // chưa chạy hoặc bị rớt mạng — không chặn phần mô phỏng demo.
+  connectLive(){
+    const url=this.props.liveWsUrl||'ws://localhost:8787';
+    let ws;
+    try{ws=new WebSocket(url);}catch(e){this.liveReconnectT=setTimeout(()=>this.connectLive(),5000);return;}
+    this.liveSocket=ws;
+    ws.onopen=()=>this.setState({liveConnected:true});
+    ws.onclose=()=>{this.setState({liveConnected:false});this.liveReconnectT=setTimeout(()=>this.connectLive(),5000);};
+    ws.onerror=()=>{};
+    ws.onmessage=(ev)=>{
+      let data;try{data=JSON.parse(ev.data);}catch(e){return;}
+      if(data.type==='gift')this.gift(data.name,data.amount);
+      else if(data.type==='chat')this.comment(data.name,data.text);
+      else if(data.type==='join')this.join(data.name);
+    };
+  }
+  loop(){const sp=this.props.simSpeed??1;this.simT=setTimeout(()=>{if(this.props.autoSim??false)this.simStep();this.loop();},(1400+Math.random()*1800)/sp);}
+  simStep(){
+    const r=Math.random();const ds=this.state.devotees.filter(d=>!d.me);
+    if(r<0.45&&ds.length)this.comment(pick(ds).name,pick(CMTS));
+    else if(r<0.66)this.join(pick(NAMES));
+    else if(r<0.8)this.gift(pick(NAMES),5);
+    else if(r<0.85)this.gift(pick(NAMES),pick([10,50]));
+    else if(r<0.92)this.gift(pick(NAMES),1);
+    else this.like(3);
+    this.setState(s=>({viewers:Math.max(20,s.viewers+Math.round(Math.random()*4-1.5))}));
+  }
+  onTick(){
+    const now=Date.now();
+    this.setState(s=>({now,
+      banners:s.banners.filter(b=>now-b.born<4200),
+      hearts:s.hearts.filter(h=>now-h.born<2400),
+      joins:s.joins.filter(j=>now-j.born<6500),
+      kneelers:s.kneelers.filter(k=>now-k.born<60000)}));
+  }
+  place(name,me){
+    let id=null;
+    this.setState(s=>{
+      if(s.devotees.some(x=>x.name===name))return null;
+      let list=s.devotees;const used=new Set(list.map(x=>x.slot));
+      let slot=STAND.findIndex((_,i)=>!used.has(i));
+      if(slot<0){const v=list.filter(x=>!x.me).sort((a,b)=>a.born-b.born)[0];if(!v)return null;slot=v.slot;list=list.filter(x=>x!==v);}
+      id=UID++;
+      return {devotees:[...list,{id,name,me:!!me,slot,born:Date.now(),arrived:false,sex:hash(name)%2,bubble:null}]};
+    },()=>{if(id)setTimeout(()=>this.setState(s=>({devotees:s.devotees.map(x=>x.id===id?{...x,arrived:true}:x)})),60);});
+  }
+  join(name,me){
+    this.place(name,me);
+    this.setState(s=>({joins:[...s.joins,{id:UID++,name,text:'vừa vào chùa',born:Date.now()}].slice(-3),
+      chat:[...s.chat,{id:UID++,name,text:'đã tham gia',kind:'join'}].slice(-5)}));
+  }
+  comment(name,text,me){
+    this.place(name,me);
+    this.setState(s=>({devotees:s.devotees.map(x=>x.name===name?{...x,bubble:{text,t:Date.now()}}:x),
+      chat:[...s.chat,{id:UID++,name,text,kind:'cmt',me:!!me}].slice(-5)}));
+  }
+  gift(name,amount,me){
+    const label=GIFT[amount]||'tăng công đức';
+    this.setState(s=>({board:{...s.board,[name]:(s.board[name]||0)+amount},
+      banners:[...s.banners,{id:UID++,name,label,amount,born:Date.now()}].slice(-2),
+      chat:[...s.chat,{id:UID++,name,text:`${label[0].toUpperCase()+label.slice(1)} · ${amount} xu`,kind:'gift',me:!!me}].slice(-5),
+      joins:amount===1?[...s.joins,{id:UID++,name,text:'vừa dâng hoa',born:Date.now()}].slice(-3):s.joins,
+      pray:s.pray+(amount>=5?1:0)}));
+    if(amount>=5)this.kneel(name,amount,me);
+  }
+  kneel(name,amount,me){
+    let id=null;
+    this.setState(s=>{
+      let ks=s.kneelers.filter(k=>k.name!==name);const used=new Set(ks.map(k=>k.slot));
+      const order=amount>=10?[0,1,2,3,4,5,6,7,8,9]:[5,6,7,8,9,1,2,3,4,0];
+      let slot=order.find(i=>!used.has(i));
+      if(slot==null){const v=[...ks].sort((a,b)=>a.born-b.born)[0];slot=v.slot;ks=ks.filter(k=>k!==v);}
+      id=UID++;
+      return {kneelers:[...ks,{id,name,amount,slot,me:!!me,born:Date.now(),arrived:false,sex:hash(name)%2}]};
+    },()=>{if(id)setTimeout(()=>this.setState(s=>({kneelers:s.kneelers.map(k=>k.id===id?{...k,arrived:true}:k)})),60);});
+  }
+  like(n){
+    const now=Date.now();
+    const hs=Array.from({length:n},(_,i)=>({id:UID++,born:now+i*120,dx:Math.round(Math.random()*60-30),color:pick(['#ff4d6d','#ff8fb8','#ffd76a','#ff6b3d'])}));
+    this.setState(s=>({hearts:[...s.hearts,...hs],likes:s.likes+n}));
+  }
+  me(){return (this.props.userName??'Thiện Tâm')||'Thiện Tâm';}
+  renderVals(){
+    const s=this.state,now=s.now,colored=this.props.coloredRobes??false;
+    const robe=n=>colored?`sepia(.6) saturate(2.4) hue-rotate(${hash(n)%360}deg) brightness(.92)`:'none';
+    const bubbles=[];
+    const devotees=s.devotees.map(d=>{
+      const [x,y]=STAND[d.slot];const ay=d.arrived?y:930,ax=d.arrived?x:195+(x-195)*.3;
+      const w=Math.round(38*fy(ay)),h=Math.round(w*300/126);
+      if(d.bubble&&now-d.bubble.t<5200){const hh=Math.round(38*fy(y)*300/126);bubbles.push({id:'b'+d.id,left:x,top:y-hh-14,text:d.bubble.text,op:now-d.bubble.t>4700?0:1,border:d.me?'#e0a93a':'#f0dcb0'});}
+      return {id:d.id,name:d.name,left:ax-w/2,top:ay-h,w,h,z:y,bg:`url(${d.sex?'assets/f_back.png':'assets/m_back.png'})`,filter:robe(d.name),
+        tagBg:d.me?'linear-gradient(90deg,#f6c453,#e0952f)':'rgba(20,8,2,.6)',tagColor:d.me?'#2a1206':'#fff'};
+    });
+    const kneelers=s.kneelers.map(k=>{
+      const [x,y]=KNEEL[k.slot];const age=now-k.born;const walking=age<2700;
+      const ay=k.arrived?y:930,ax=k.arrived?x:195;
+      let w,h;if(walking){w=Math.round(38*fy(ay));h=Math.round(w*300/126);}else{w=Math.round(50*fy(y));h=Math.round(w*210/165);}
+      const bowing=!walking&&Math.floor((age-2700)/1600)%2===1;
+      if(!walking&&age<6700)bubbles.push({id:'k'+k.id,left:x,top:y-h-14,text:'Nam mô A Di Đà Phật',op:age>6300?0:1,border:'#e0a93a'});
+      const big=k.amount>=10;
+      return {id:k.id,name:`${k.name} · ${k.amount}`,left:ax-w/2,top:ay-h,w,h,z:y,
+        trans:walking?'left 2.6s cubic-bezier(.3,.2,.4,1),top 2.6s cubic-bezier(.3,.2,.4,1),width 2.6s cubic-bezier(.3,.2,.4,1),height 2.6s cubic-bezier(.3,.2,.4,1),opacity .8s':'opacity .8s',
+        op:age>58500?0:1,bg:`url(${walking?(k.sex?'assets/f_back.png':'assets/m_back.png'):'assets/sit_back.png'})`,
+        tf:walking?(Math.floor(now/250)%2?'translateY(-1.5px)':'none'):(bowing?'scaleY(.8) scaleX(1.05)':'none'),
+        filter:robe(k.name),glow:walking?0:(big?1:.6),tagOp:walking||(!walking&&age<6700)?0:1,
+        tagBg:k.me?'linear-gradient(90deg,#f6c453,#e0952f)':big?'linear-gradient(90deg,#b3261e,#7d1410)':'rgba(20,8,2,.65)',
+        tagColor:k.me?'#2a1206':big?'#ffe08a':'#fff'};
+    });
+    const rankBg=['#f3d27a','#dcdcdc','#d39a5e','#7a4a2c','#7a4a2c'];
+    const board=Object.entries(s.board).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([name,total],i)=>({name,total,rank:i+1,rankBg:rankBg[i],color:name===this.me()?'#ffd76a':'#fbe9c0'}));
+    const n=s.chat.length;
+    const chat=s.chat.map((c,i)=>({id:c.id,name:c.name,text:c.text,initial:ini(c.name),bg:av(c.name),op:n<2?1:0.5+0.5*i/(n-1),
+      nameColor:c.me?'#ffd76a':'rgba(255,255,255,.78)',textColor:c.kind==='gift'?'#ffd76a':c.kind==='join'?'rgba(255,255,255,.7)':'#fff'}));
+    const banners=s.banners.map((b,i)=>{const age=now-b.born;const big=b.amount>=10;return {id:b.id,name:b.name,label:b.label,amount:b.amount,initial:ini(b.name),avBg:av(b.name),
+      top:(s.banners.length-1-i)*46,tf:age<150?'translateX(-120%)':'translateX(0)',op:age>3700?0:1,
+      bg:big?'linear-gradient(90deg,rgba(214,150,40,.95),rgba(214,150,40,0))':'linear-gradient(90deg,rgba(150,30,18,.92),rgba(150,30,18,0))'};});
+    const hearts=s.hearts.map(h=>{const age=now-h.born;const go=age>60;return {id:h.id,color:h.color,tf:go?`translate(${h.dx}px,-240px) scale(1.3)`:'translate(0,0) scale(.6)',op:age<0?0:go?0:1};});
+    const joins=s.joins.map(j=>({...j,op:now-j.born>6000?0:1}));
+    const d=new Date(now);const clock=`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+    const me=this.me();
+    const doGift=a=>()=>{this.gift(me,a,true);this.setState({giftOpen:false});};
+    const giftOptions=[{id:1,name:'Hoa sen',price:1,desc:'dâng hoa',bg:'#ffb3cc'},{id:5,name:'Nén hương',price:5,desc:'dâng lễ',bg:'#f3d27a'},
+      {id:10,name:'Đèn dược sư',price:10,desc:'tăng công đức',bg:'#ffc06a'},{id:50,name:'Mâm lễ',price:50,desc:'đại công đức',bg:'#ff9a5a'}].map(o=>({...o,onClick:doGift(o.price)}));
+    const topViewers=board.slice(0,2).map(b=>({id:b.name,initial:ini(b.name),bg:av(b.name)}));
+    const send=()=>{const t=s.draft.trim();if(!t)return;if(!this.state.devotees.some(x=>x.me))this.join(me,true);this.comment(me,t,true);this.setState({draft:''});};
+    return {scale:s.scale,frameW:Math.round(390*s.scale),frameH:Math.round(844*s.scale),clock,devotees,kneelers,bubbles,board,chat,banners,hearts,joins,giftOptions,topViewers,
+      showBoard:this.props.showBoard??true,uiDisplay:(this.props.showTikTokUI??true)?"block":"none",pray:s.pray,viewers:s.viewers,likesFmt:(s.likes/1000).toFixed(1)+'K',draft:s.draft,giftOpen:s.giftOpen,
+      liveConnected:s.liveConnected,liveDot:s.liveConnected?'#3ad17a':'#d64545',liveLabel:s.liveConnected?'Đã kết nối TikTok LIVE':'Chưa kết nối (đang mô phỏng)',
+      followLabel:s.follow?'Đã theo dõi':'+ Theo dõi',followBg:s.follow?'rgba(255,255,255,.22)':'oklch(0.62 0.21 18)',
+      toggleFollow:()=>this.setState(x=>({follow:!x.follow})),
+      onDraft:e=>this.setState({draft:e.target.value}),onKey:e=>{if(e.key==='Enter')send();},send,
+      gift5:()=>this.gift(me,5,true),gift10:()=>this.gift(me,10,true),giftRose:()=>this.gift(me,1,true),
+      openGifts:()=>this.setState({giftOpen:true}),closeGifts:()=>this.setState({giftOpen:false}),like:()=>this.like(1)};
+  }
+}
+</script>
+</body>
+</html>
